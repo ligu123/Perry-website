@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 280" fill="none">
+  <defs>
+    <linearGradient id="top-col" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1e2e2a"/>
+      <stop offset="100%" stop-color="#182420"/>
+    </linearGradient>
+    <linearGradient id="left-col" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#141e1a"/>
+      <stop offset="100%" stop-color="#0e1614"/>
+    </linearGradient>
+    <linearGradient id="right-col" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a2622"/>
+      <stop offset="100%" stop-color="#121c18"/>
+    </linearGradient>
+  </defs>
+  <polygon points="80,120 280,40 480,120 280,200" fill="url(#top-col)" stroke="#8ed4b8" stroke-opacity="0.16" stroke-width="1"/>
+  <polygon points="80,120 80,168 280,248 280,200" fill="url(#left-col)" stroke="#ffffff" stroke-opacity="0.06" stroke-width="0.5"/>
+  <polygon points="280,200 280,248 480,168 480,120" fill="url(#right-col)" stroke="#ffffff" stroke-opacity="0.06" stroke-width="0.5"/>
+  <rect x="148" y="78" width="110" height="58" rx="4" fill="#8ed4b8" fill-opacity="0.1" stroke="#8ed4b8" stroke-opacity="0.22"/>
+  <rect x="270" y="78" width="110" height="58" rx="4" fill="#8ed4b8" fill-opacity="0.14" stroke="#8ed4b8" stroke-opacity="0.26"/>
+  <circle cx="175" cy="95" r="8" fill="#8ed4b8" fill-opacity="0.3"/>
+  <circle cx="297" cy="95" r="8" fill="#8ed4b8" fill-opacity="0.35"/>
+  <line x1="165" y1="112" x2="230" y2="112" stroke="#8ed4b8" stroke-opacity="0.3" stroke-width="2"/>
+  <line x1="287" y1="112" x2="352" y2="112" stroke="#8ed4b8" stroke-opacity="0.35" stroke-width="2"/>
+  <path d="M230 100 Q250 88 270 100" stroke="#8ed4b8" stroke-opacity="0.25" stroke-width="1.5" fill="none"/>
+  <text x="280" y="155" text-anchor="middle" fill="#8ed4b8" fill-opacity="0.5" font-family="system-ui,sans-serif" font-size="11" font-weight="500" letter-spacing="0.15em">COLLABORATION</text>
+</svg>

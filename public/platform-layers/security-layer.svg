@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 280" fill="none">
+  <defs>
+    <linearGradient id="top-sec" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#222224"/>
+      <stop offset="100%" stop-color="#1a1a1c"/>
+    </linearGradient>
+    <linearGradient id="left-sec" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#161618"/>
+      <stop offset="100%" stop-color="#101012"/>
+    </linearGradient>
+    <linearGradient id="right-sec" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1c1c1e"/>
+      <stop offset="100%" stop-color="#141416"/>
+    </linearGradient>
+  </defs>
+  <!-- thicker foundation slab -->
+  <polygon points="60,128 280,36 500,128 280,220" fill="url(#top-sec)" stroke="#ffffff" stroke-opacity="0.1" stroke-width="1"/>
+  <polygon points="60,128 60,192 280,284 280,220" fill="url(#left-sec)" stroke="#ffffff" stroke-opacity="0.05" stroke-width="0.5"/>
+  <polygon points="280,220 280,284 500,192 500,128" fill="url(#right-sec)" stroke="#ffffff" stroke-opacity="0.05" stroke-width="0.5"/>
+  <!-- foundation steps -->
+  <polygon points="100,200 280,128 460,200 280,272" fill="#1e1e22" fill-opacity="0.6" stroke="#ffffff" stroke-opacity="0.04"/>
+  <polygon points="140,216 280,160 420,216 280,272" fill="#222226" fill-opacity="0.4" stroke="#ffffff" stroke-opacity="0.03"/>
+  <!-- shield motif -->
+  <path d="M280 72 L310 84 L310 108 Q310 128 280 140 Q250 128 250 108 L250 84 Z" fill="#ffffff" fill-opacity="0.08" stroke="#ffffff" stroke-opacity="0.2" stroke-width="1"/>
+  <path d="M280 88 L298 96 L298 110 Q298 122 280 130 Q262 122 262 110 L262 96 Z" fill="#ffffff" fill-opacity="0.12"/>
+  <line x1="180" y1="108" x2="240" y2="108" stroke="#ffffff" stroke-opacity="0.12" stroke-width="2"/>
+  <line x1="320" y1="108" x2="380" y2="108" stroke="#ffffff" stroke-opacity="0.12" stroke-width="2"/>
+  <text x="280" y="168" text-anchor="middle" fill="#ffffff" fill-opacity="0.3" font-family="system-ui,sans-serif" font-size="11" font-weight="500" letter-spacing="0.15em">SECURITY</text>
+</svg>

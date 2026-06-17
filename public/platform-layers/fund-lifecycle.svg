@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 280" fill="none">
+  <defs>
+    <linearGradient id="top-fl" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2e2a3a"/>
+      <stop offset="100%" stop-color="#242030"/>
+    </linearGradient>
+    <linearGradient id="left-fl" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a1820"/>
+      <stop offset="100%" stop-color="#121018"/>
+    </linearGradient>
+    <linearGradient id="right-fl" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#221e2c"/>
+      <stop offset="100%" stop-color="#18141e"/>
+    </linearGradient>
+    <filter id="glow-fl" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- isometric slab -->
+  <polygon points="80,120 280,40 480,120 280,200" fill="url(#top-fl)" stroke="#c8b8f0" stroke-opacity="0.18" stroke-width="1"/>
+  <polygon points="80,120 80,168 280,248 280,200" fill="url(#left-fl)" stroke="#ffffff" stroke-opacity="0.06" stroke-width="0.5"/>
+  <polygon points="280,200 280,248 480,168 480,120" fill="url(#right-fl)" stroke="#ffffff" stroke-opacity="0.06" stroke-width="0.5"/>
+  <!-- UI tiles on top face -->
+  <rect x="130" y="88" width="72" height="44" rx="4" fill="#c8b8f0" fill-opacity="0.12" stroke="#c8b8f0" stroke-opacity="0.2"/>
+  <rect x="214" y="72" width="96" height="52" rx="4" fill="#c8b8f0" fill-opacity="0.18" stroke="#c8b8f0" stroke-opacity="0.28"/>
+  <rect x="324" y="88" width="72" height="44" rx="4" fill="#c8b8f0" fill-opacity="0.12" stroke="#c8b8f0" stroke-opacity="0.2"/>
+  <line x1="150" y1="100" x2="190" y2="100" stroke="#c8b8f0" stroke-opacity="0.35" stroke-width="2"/>
+  <line x1="150" y1="112" x2="175" y2="112" stroke="#c8b8f0" stroke-opacity="0.2" stroke-width="2"/>
+  <circle cx="252" cy="92" r="6" fill="#c8b8f0" fill-opacity="0.4"/>
+  <line x1="234" y1="104" x2="290" y2="104" stroke="#c8b8f0" stroke-opacity="0.4" stroke-width="2"/>
+  <line x1="234" y1="114" x2="270" y2="114" stroke="#c8b8f0" stroke-opacity="0.25" stroke-width="2"/>
+  <!-- label -->
+  <text x="280" y="155" text-anchor="middle" fill="#c8b8f0" fill-opacity="0.5" font-family="system-ui,sans-serif" font-size="11" font-weight="500" letter-spacing="0.15em">FUND LIFECYCLE</text>
+</svg>
