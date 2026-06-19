@@ -20,8 +20,6 @@ export type ProductLifecycle = {
   description: string;
   kpis?: string[];
   heroImageSrc: string;
-  ctaHeadline?: string;
-  ctaLabel?: string;
   features: ProductFeature[];
 };
 
@@ -39,8 +37,6 @@ export const productLifecycle: ProductLifecycle[] = [
       "100% of negotiated terms captured in a searchable precedent record for future funds",
     ],
     heroImageSrc: platformIntelligenceProductImages.formation.negotiationReview,
-    ctaHeadline: "Build the fund record once. Operate from it throughout the fund lifecycle.",
-    ctaLabel: "Book demo",
     features: [
       {
         slug: "fund-document-review",
@@ -133,8 +129,6 @@ export const productLifecycle: ProductLifecycle[] = [
       "Reduce missed post-closing obligations by 75%",
     ],
     heroImageSrc: platformIntelligenceProductImages.deployment.transactionWorkflow,
-    ctaHeadline: "Run every deal with the legal context already in place",
-    ctaLabel: "Book demo",
     features: [
       {
         slug: "review-negotiation",
@@ -210,8 +204,6 @@ export const productLifecycle: ProductLifecycle[] = [
       "100% of legal decisions preserved in a searchable fund record",
     ],
     heroImageSrc: platformIntelligenceProductImages.management.ongoingWork,
-    ctaHeadline: "Make the fund's legal context usable every day",
-    ctaLabel: "Book demo",
     features: [
       {
         slug: "obligation-management",
@@ -297,8 +289,6 @@ export const productLifecycle: ProductLifecycle[] = [
       "Track 100% of post-exit obligations from close",
     ],
     heroImageSrc: platformIntelligenceProductImages.exit.legalContinuity,
-    ctaHeadline: "Make exit readiness part of the investment lifecycle",
-    ctaLabel: "Book demo",
     features: [
       {
         slug: "exit-readiness",

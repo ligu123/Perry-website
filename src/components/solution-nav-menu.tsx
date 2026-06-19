@@ -22,7 +22,7 @@ function SolutionNavSection({
     <div className="min-w-36">
       <p
         className={cn(
-          "px-2 pb-2 text-xs font-medium tracking-wide uppercase",
+          "px-2 pb-2 text-xs",
           onDark ? "text-white/50" : "text-muted-foreground",
         )}
       >

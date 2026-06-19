@@ -1,5 +1,6 @@
 import Image from "@/components/asset-image";
 
+import { getImageAspectRatio } from "@/lib/image-aspect-ratios";
 import { cn } from "@/lib/utils";
 
 type StoryChapterVisualProps = {
@@ -10,13 +11,15 @@ type StoryChapterVisualProps = {
 
 function StoryChapterVisual({ index, title, imageSrc }: StoryChapterVisualProps) {
   const isSquareImage = imageSrc?.includes("/platform-intelligence-square/");
+  const intrinsicAspectRatio = imageSrc ? getImageAspectRatio(imageSrc) : undefined;
 
   return (
     <div
       className={cn(
         "relative overflow-hidden rounded-sm border border-border bg-muted/30 shadow-sm",
-        isSquareImage ? "aspect-square" : "aspect-[4/5]",
+        intrinsicAspectRatio === undefined && (isSquareImage ? "aspect-square" : "aspect-[4/5]"),
       )}
+      style={intrinsicAspectRatio ? { aspectRatio: intrinsicAspectRatio } : undefined}
     >
       {imageSrc ? (
         <Image
@@ -27,7 +30,10 @@ function StoryChapterVisual({ index, title, imageSrc }: StoryChapterVisualProps)
             imageSrc.includes("/platform-intelligence/") ||
             imageSrc.includes("/platform-intelligence-square/")
           }
-          className="object-contain object-center"
+          className={cn(
+            "object-center",
+            intrinsicAspectRatio ? "object-cover" : "object-contain",
+          )}
           sizes="(max-width: 1024px) 100vw, 560px"
         />
       ) : (

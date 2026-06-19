@@ -700,7 +700,7 @@ export function PlatformArchitectureExplorer({
   return (
     <div ref={runwayRef} className="relative" style={{ height: runwayHeight }}>
       <div
-        className="sticky flex flex-col overflow-visible pt-12"
+        className="sticky flex flex-col overflow-visible pt-8"
         style={{
           top: SITE_HEADER_OFFSET,
           height: `calc(100vh - ${SITE_HEADER_OFFSET})`,

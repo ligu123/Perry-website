@@ -32,18 +32,15 @@ export function SiteNav({ contrast = "on-light" }: SiteNavProps) {
   );
 
   const navLinkClassName = cn(
-    "inline-flex h-9 items-center rounded-lg px-2.5 text-sm transition-colors",
+    "inline-flex h-9 items-center rounded-sm px-2.5 text-sm transition-colors",
     onDark
       ? "text-white/80 hover:bg-white/10 hover:text-white focus:bg-white/10"
       : "text-muted-foreground hover:bg-muted hover:text-foreground focus:bg-muted",
   );
 
-  const menuPanelClassName = cn(
-    "rounded-lg",
-    onDark
-      ? "border border-white/10 bg-black/90 text-white shadow-none backdrop-blur-md"
-      : "bg-popover shadow ring-1 ring-foreground/10",
-  );
+  const menuPopupClassName = onDark
+    ? "border border-white/10 bg-black/70 text-white shadow-none ring-0 backdrop-blur-md"
+    : undefined;
 
   return (
     <NavigationMenu
@@ -58,16 +55,15 @@ export function SiteNav({ contrast = "on-light" }: SiteNavProps) {
       align="start"
       delay={100}
       closeDelay={250}
+      popupClassName={menuPopupClassName}
     >
-      <NavigationMenuList className="gap-1">
+      <NavigationMenuList className="gap-4">
         <NavigationMenuItem value="product">
           <NavigationMenuTrigger className={navTriggerClassName}>
             Product
           </NavigationMenuTrigger>
           <NavigationMenuContent className="p-0">
-            <div className={menuPanelClassName}>
-              <ProductNavMenu contrast={contrast} />
-            </div>
+            <ProductNavMenu contrast={contrast} />
           </NavigationMenuContent>
         </NavigationMenuItem>
 
@@ -76,7 +72,7 @@ export function SiteNav({ contrast = "on-light" }: SiteNavProps) {
             Solution
           </NavigationMenuTrigger>
           <NavigationMenuContent className="p-0">
-            <div className={cn(menuPanelClassName, "p-2.5")}>
+            <div className="p-2.5">
               <SolutionNavMenu contrast={contrast} />
             </div>
           </NavigationMenuContent>

@@ -7,6 +7,7 @@ import { ArrowRight } from "lucide-react";
 import { SiteNav } from "@/components/site-nav";
 import { Button } from "@/components/ui/button";
 import { useAdaptiveHeader } from "@/hooks/use-adaptive-header";
+import { bookDemoUrl } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 
 export function SiteHeader() {
@@ -59,7 +60,13 @@ export function SiteHeader() {
             className={cn(
               onDark && "bg-white text-black hover:bg-white/90",
             )}
-            render={<Link href="/#contact" />}
+            render={
+              <Link
+                href={bookDemoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              />
+            }
           >
             Book a demo
             <ArrowRight />

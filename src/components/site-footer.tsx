@@ -9,8 +9,8 @@ import { allSolutionPages } from "@/lib/solution-navigation";
 
 export function SiteFooter() {
   return (
-    <footer id="contact" className="border-t border-border/60 bg-muted/30">
-      <div className="section-container px-6 py-12">
+    <footer id="contact" className="bg-muted/100">
+      <div className="section-container px-6 pt-20 pb-24">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,2fr)] lg:items-start">
           <div>
             <Link href="/" className="inline-flex h-6 shrink-0 items-center">
@@ -19,7 +19,7 @@ export function SiteFooter() {
                 alt="Perry"
                 width={355}
                 height={96}
-                className="h-6 w-auto"
+                className="h-8 w-auto"
               />
             </Link>
             <p className="mt-2 max-w-sm text-sm text-muted-foreground">

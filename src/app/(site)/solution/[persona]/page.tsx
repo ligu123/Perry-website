@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight } from "lucide-react";
-
+import { CtaSection } from "@/components/cta-section";
 import { EnterpriseSafetySection } from "@/components/enterprise-safety-section";
+import { SolutionWhyPerrySection } from "@/components/solution-why-perry-section";
 import { StoryChapter } from "@/components/story-chapter";
 import { StoryPageHero } from "@/components/story-page-hero";
-import { Button } from "@/components/ui/button";
 import { allSolutionPages, getSolutionPage } from "@/lib/solution-navigation";
 
 type SolutionDetailPageProps = {
@@ -54,6 +52,8 @@ export default async function SolutionDetailPage({
         imageAlt={`${page.label} overview`}
       />
 
+      <SolutionWhyPerrySection />
+
       {page.chapters.map((chapter, index) => (
         <StoryChapter
           key={chapter.title}
@@ -69,21 +69,7 @@ export default async function SolutionDetailPage({
 
       <EnterpriseSafetySection />
 
-      {page.ctaHeadline && page.ctaLabel && (
-        <section className="border-t border-border/60 bg-muted/20 px-6 py-20 sm:py-24">
-          <div className="mx-auto max-w-3xl text-center">
-            <h2 className="font-source-serif text-3xl font-medium tracking-tight text-balance sm:text-4xl">
-              {page.ctaHeadline}
-            </h2>
-            <div className="mt-8">
-              <Button size="lg" render={<Link href="mailto:hello@perry.com" />}>
-                {page.ctaLabel}
-                <ArrowRight />
-              </Button>
-            </div>
-          </div>
-        </section>
-      )}
+      <CtaSection className="pt-20 sm:pt-24" />
     </div>
   );
 }

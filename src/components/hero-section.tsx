@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 
 import { ClientBanner } from "@/components/client-banner";
 import { Button } from "@/components/ui/button";
+import { bookDemoUrl } from "@/lib/navigation";
 
 export function HeroSection() {
   return (
@@ -50,7 +51,13 @@ export function HeroSection() {
               <Button
                 size="lg"
                 className="bg-white text-black hover:bg-white/90"
-                render={<Link href="#contact" />}
+                render={
+                  <Link
+                    href={bookDemoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  />
+                }
               >
                 Book a demo
                 <ArrowRight />

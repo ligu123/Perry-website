@@ -1,5 +1,6 @@
 import Image from "@/components/asset-image";
 
+import { getImageAspectRatio } from "@/lib/image-aspect-ratios";
 import { cn } from "@/lib/utils";
 
 type StoryPageHeroProps = {
@@ -23,6 +24,8 @@ export function StoryPageHero({
   imageAspect = "portrait",
   className,
 }: StoryPageHeroProps) {
+  const intrinsicAspectRatio = imageSrc ? getImageAspectRatio(imageSrc) : undefined;
+
   return (
     <section
       className={cn(
@@ -67,12 +70,14 @@ export function StoryPageHero({
         <div
           className={cn(
             "relative overflow-hidden rounded-sm border border-border bg-muted/30 shadow-sm",
-            imageAspect === "square" || imageSrc?.includes("/platform-intelligence-square/")
-              ? "aspect-square"
-              : imageAspect === "landscape"
-                ? "aspect-[3/2]"
-                : "aspect-[4/5]",
+            intrinsicAspectRatio === undefined &&
+              (imageAspect === "square" || imageSrc?.includes("/platform-intelligence-square/")
+                ? "aspect-square"
+                : imageAspect === "landscape"
+                  ? "aspect-[3/2]"
+                  : "aspect-[4/5]"),
           )}
+          style={intrinsicAspectRatio ? { aspectRatio: intrinsicAspectRatio } : undefined}
         >
           {imageSrc ? (
             <Image
@@ -85,7 +90,9 @@ export function StoryPageHero({
               }
               className={cn(
                 "object-center",
-                imageAspect === "landscape" ? "object-cover" : "object-contain",
+                intrinsicAspectRatio || imageAspect === "landscape"
+                  ? "object-cover"
+                  : "object-contain",
               )}
               sizes="(max-width: 1024px) 100vw, 560px"
               priority

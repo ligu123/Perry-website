@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ClipboardList, Database, Lock, ShieldCheck } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { bookDemoUrl } from "@/lib/navigation";
 
 const safetyItems = [
   {
@@ -64,7 +65,13 @@ export function EnterpriseSafetySection() {
             <div className="mt-8">
               <Button
                 className="bg-white text-black hover:bg-white/90"
-                render={<Link href="#contact" />}
+                render={
+                  <Link
+                    href={bookDemoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  />
+                }
               >
                 Book a demo
               </Button>

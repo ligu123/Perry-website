@@ -11,7 +11,7 @@ const personaCards = [
 
 export function SolutionSection() {
   return (
-    <section id="solution" className="py-32">
+    <section id="solution" className="overflow-x-hidden py-32">
       <div className="section-container px-6">
         <div className="max-w-2xl">
           <p className="flex items-center gap-2 text-sm font-medium tracking-wide text-muted-foreground">
@@ -27,7 +27,7 @@ export function SolutionSection() {
         </div>
       </div>
 
-      <div className="mt-16 overflow-x-auto pb-2">
+      <div className="scrollbar-hide mt-16 w-full max-w-full overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <div className="flex w-max flex-nowrap gap-2 pl-[max(1.5rem,calc((100vw-var(--container-8xl))/2+1.5rem))] pr-6">
           {personaCards.map((item) => (
               <Link

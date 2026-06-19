@@ -3,11 +3,17 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { bookDemoUrl } from "@/lib/navigation";
+import { cn } from "@/lib/utils";
 
-export function CtaSection() {
+type CtaSectionProps = {
+  className?: string;
+};
+
+export function CtaSection({ className }: CtaSectionProps) {
   return (
-    <section id="contact" className="px-6 pb-24">
-      <div className="relative mx-auto max-w-8xl overflow-hidden rounded-2xl border border-border shadow-sm">
+    <section id="contact" className={cn("px-6 pb-24", className)}>
+      <div className="relative mx-auto max-w-8xl overflow-hidden rounded-sm border border-border shadow-sm">
         <div aria-hidden className="pointer-events-none absolute inset-0">
           <Image
             src="/images/cta/jaanus-jagomagi-unsplash.jpg"
@@ -22,17 +28,23 @@ export function CtaSection() {
 
         <div className="relative px-8 py-16 text-center text-white sm:px-16 sm:py-20">
           <h2 className="font-source-serif text-3xl font-medium tracking-tight text-balance sm:text-4xl">
-            Ready to build with Perry?
+            Run your fund&apos;s legal work from one connected platform.
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-white/80 text-pretty">
-            Tell us about your company and we&apos;ll help you get started with a site
-            that reflects your brand and converts visitors into customers.
+            Book a demo to see how Perry helps in-house legal teams unify fund
+            formation, deal execution, and portfolio governance.
           </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Button
               size="lg"
               className="bg-white text-black hover:bg-white/90"
-              render={<Link href="mailto:hello@perry.com" />}
+              render={
+                <Link
+                  href={bookDemoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                />
+              }
             >
               Book demo
               <ArrowRight />

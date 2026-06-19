@@ -43,9 +43,9 @@ export function TestimonialSection() {
   };
 
   return (
-    <section className="bg-white px-6 py-24">
+    <section className="bg-white px-6 pt-32 pb-48">
       <div className="section-container">
-        <div className="max-w-2xl">
+        <div className="max-w-3xl">
           <p className="flex items-center gap-2 text-sm font-medium tracking-wide text-muted-foreground">
             <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
             Testimonials
@@ -55,16 +55,16 @@ export function TestimonialSection() {
           </h2>
         </div>
 
-        <div className="mt-12 md:grid md:grid-cols-3 md:gap-4">
+        <div className="mt-12 md:grid md:grid-cols-3 md:gap-3">
           <div className="md:contents">
             {testimonials.map((item, index) => (
               <figure
                 key={item.name}
-                className={`flex min-h-[26rem] flex-col items-start rounded-none border border-border bg-card px-8 py-10 text-left sm:min-h-[28rem] ${
+                className={`flex min-h-[26rem] flex-col items-start rounded-md bg-muted/60 p-8 text-left sm:min-h-[28rem] ${
                   index === activeIndex ? "flex" : "hidden md:flex"
                 }`}
               >
-                <blockquote className="flex flex-1 items-start text-lg font-medium leading-relaxed text-foreground/80 text-pretty">
+                <blockquote className="flex flex-1 items-start text-lg font-base leading-relaxed text-foreground/80 text-pretty">
                   {item.quote}
                 </blockquote>
                 <figcaption className="mt-8 flex items-center gap-3">
@@ -73,11 +73,11 @@ export function TestimonialSection() {
                     alt=""
                     width={48}
                     height={48}
-                    className="size-12 shrink-0 rounded-full object-cover ring-2 ring-border"
+                    className="size-12 shrink-0 rounded-full object-cover"
                   />
                   <div>
-                    <p className="text-sm font-medium tracking-wide">{item.name}</p>
-                    <p className="mt-0.5 text-xs text-muted-foreground">
+                    <p className="font-source-serif text-xl font-medium">{item.name}</p>
+                    <p className="mt-0.5 text-sm text-muted-foreground">
                       {item.role} at {item.firm}
                     </p>
                   </div>
