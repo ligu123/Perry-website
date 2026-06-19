@@ -1,3 +1,4 @@
+import { CtaSection } from "@/components/cta-section";
 import { EnterpriseSafetySection } from "@/components/enterprise-safety-section";
 import { HeroSection } from "@/components/hero-section";
 import { PlatformArchitectureSection } from "@/components/platform-architecture-section";
@@ -14,6 +15,7 @@ export default function Home() {
       <SolutionSection />
       <EnterpriseSafetySection />
       <TestimonialSection />
+      <CtaSection />
     </>
   );
 }

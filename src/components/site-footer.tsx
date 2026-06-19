@@ -4,6 +4,8 @@ import { Separator } from "@/components/ui/separator";
 
 import { footerNavLinks } from "@/lib/navigation";
 import { legalPages } from "@/lib/legal-pages";
+import { productLifecycle } from "@/lib/product-navigation";
+import { allSolutionPages } from "@/lib/solution-navigation";
 
 export function SiteFooter() {
   return (
@@ -21,7 +23,7 @@ export function SiteFooter() {
               />
             </Link>
             <p className="mt-2 max-w-sm text-sm text-muted-foreground">
-              Perry is the Legal OS for high velocity funds
+              Perry is the Legal OS for private capital
             </p>
             <div className="mt-6 flex items-center gap-4">
               <Image
@@ -41,16 +43,34 @@ export function SiteFooter() {
             </div>
           </div>
 
-          <div className="grid gap-8 sm:grid-cols-3">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             <div>
               <p className="text-sm font-medium">Product</p>
               <nav className="mt-3 flex flex-col gap-2">
-                <Link
-                  href="/"
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  Home
-                </Link>
+                {productLifecycle.map((stage) => (
+                  <Link
+                    key={stage.slug}
+                    href={`/product/${stage.slug}`}
+                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {stage.label}
+                  </Link>
+                ))}
+              </nav>
+            </div>
+
+            <div>
+              <p className="text-sm font-medium">Solutions</p>
+              <nav className="mt-3 flex flex-col gap-2">
+                {allSolutionPages.map((page) => (
+                  <Link
+                    key={page.slug}
+                    href={`/solution/${page.slug}`}
+                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    {page.label}
+                  </Link>
+                ))}
               </nav>
             </div>
 

@@ -75,7 +75,7 @@ export const solutionByRole: SolutionPage[] = [
       },
     ],
     ctaHeadline: "Give your legal team one connected system for every fund and deal",
-    ctaLabel: "Book a legal team walkthrough",
+    ctaLabel: "Book demo",
   },
   {
     slug: "portfolio-company",
@@ -131,7 +131,7 @@ export const solutionByRole: SolutionPage[] = [
       },
     ],
     ctaHeadline: "Respond to investor legal work without the back-and-forth",
-    ctaLabel: "Book a portfolio company walkthrough",
+    ctaLabel: "Book demo",
   },
   {
     slug: "lps",
@@ -185,7 +185,7 @@ export const solutionByRole: SolutionPage[] = [
       },
     ],
     ctaHeadline: "Manage fund legal interactions in one secure workspace",
-    ctaLabel: "Book an investor workspace walkthrough",
+    ctaLabel: "Book demo",
   },
 ];
 
@@ -243,7 +243,7 @@ export const solutionByIndustry: SolutionPage[] = [
       },
     ],
     ctaHeadline: "Scale legal support across more deals without scaling headcount",
-    ctaLabel: "Book a venture capital walkthrough",
+    ctaLabel: "Book demo",
   },
   {
     slug: "pe",
@@ -298,7 +298,7 @@ export const solutionByIndustry: SolutionPage[] = [
       },
     ],
     ctaHeadline: "Maintain legal control from diligence through exit",
-    ctaLabel: "Book a private equity walkthrough",
+    ctaLabel: "Book demo",
   },
 ];
 

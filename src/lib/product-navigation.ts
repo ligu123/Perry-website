@@ -40,7 +40,7 @@ export const productLifecycle: ProductLifecycle[] = [
     ],
     heroImageSrc: platformIntelligenceProductImages.formation.negotiationReview,
     ctaHeadline: "Build the fund record once. Operate from it throughout the fund lifecycle.",
-    ctaLabel: "Book a fund formation walkthrough",
+    ctaLabel: "Book demo",
     features: [
       {
         slug: "fund-document-review",
@@ -134,7 +134,7 @@ export const productLifecycle: ProductLifecycle[] = [
     ],
     heroImageSrc: platformIntelligenceProductImages.deployment.transactionWorkflow,
     ctaHeadline: "Run every deal with the legal context already in place",
-    ctaLabel: "Book a capital deployment walkthrough",
+    ctaLabel: "Book demo",
     features: [
       {
         slug: "review-negotiation",
@@ -211,7 +211,7 @@ export const productLifecycle: ProductLifecycle[] = [
     ],
     heroImageSrc: platformIntelligenceProductImages.management.ongoingWork,
     ctaHeadline: "Make the fund's legal context usable every day",
-    ctaLabel: "Book a fund management walkthrough",
+    ctaLabel: "Book demo",
     features: [
       {
         slug: "obligation-management",
@@ -298,7 +298,7 @@ export const productLifecycle: ProductLifecycle[] = [
     ],
     heroImageSrc: platformIntelligenceProductImages.exit.legalContinuity,
     ctaHeadline: "Make exit readiness part of the investment lifecycle",
-    ctaLabel: "Book an exit readiness walkthrough",
+    ctaLabel: "Book demo",
     features: [
       {
         slug: "exit-readiness",
