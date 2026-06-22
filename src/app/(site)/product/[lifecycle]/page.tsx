@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CtaSection } from "@/components/cta-section";
-import { EnterpriseSafetySection } from "@/components/enterprise-safety-section";
 import { StoryChapter } from "@/components/story-chapter";
 import { StoryKpiSection } from "@/components/story-kpi-section";
 import { StoryPageHero } from "@/components/story-page-hero";
@@ -45,6 +44,7 @@ export default async function LifecyclePage({ params }: LifecyclePageProps) {
         eyebrow={lifecycle.label}
         title={lifecycle.headline}
         description={lifecycle.description}
+        showBookDemoCta
         imageSrc={lifecycle.heroImageSrc}
         imageAlt={`${lifecycle.label} overview`}
       />
@@ -67,8 +67,6 @@ export default async function LifecyclePage({ params }: LifecyclePageProps) {
           imageSrc={feature.imageSrc}
         />
       ))}
-
-      <EnterpriseSafetySection />
 
       <CtaSection className="pt-20 sm:pt-24" />
     </div>

@@ -1,5 +1,4 @@
 import { CtaSection } from "@/components/cta-section";
-import { EnterpriseSafetySection } from "@/components/enterprise-safety-section";
 import { HeroSection } from "@/components/hero-section";
 import { PlatformArchitectureSection } from "@/components/platform-architecture-section";
 import { PlatformIntelligenceSection } from "@/components/platform-intelligence-section";
@@ -20,7 +19,6 @@ export default function Home() {
         description="From fund formation through deal execution and portfolio governance — see how Perry adapts to the way your team works."
       />
       <SolutionSection />
-      <EnterpriseSafetySection />
       <TestimonialSection />
       <CtaSection />
     </>

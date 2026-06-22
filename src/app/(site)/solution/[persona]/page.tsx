@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CtaSection } from "@/components/cta-section";
-import { EnterpriseSafetySection } from "@/components/enterprise-safety-section";
 import { SolutionWhyPerrySection } from "@/components/solution-why-perry-section";
 import { StoryChapter } from "@/components/story-chapter";
 import { StoryPageHero } from "@/components/story-page-hero";
@@ -46,13 +45,13 @@ export default async function SolutionDetailPage({
       <StoryPageHero
         eyebrow="Solution"
         title={page.headline}
-        description={page.description}
-        kpis={page.kpis}
+        description={page.cardDescription}
+        showBookDemoCta
         imageSrc={page.heroImageSrc}
         imageAlt={`${page.label} overview`}
       />
 
-      <SolutionWhyPerrySection />
+      <SolutionWhyPerrySection persona={slug} />
 
       {page.chapters.map((chapter, index) => (
         <StoryChapter
@@ -66,8 +65,6 @@ export default async function SolutionDetailPage({
           imageSrc={chapter.imageSrc}
         />
       ))}
-
-      <EnterpriseSafetySection />
 
       <CtaSection className="pt-20 sm:pt-24" />
     </div>

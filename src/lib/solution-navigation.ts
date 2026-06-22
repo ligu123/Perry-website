@@ -13,7 +13,6 @@ export type SolutionPage = {
   headline: string;
   description: string;
   cardDescription: string;
-  kpis?: string[];
   heroImageSrc: string;
   cardImageSrc: string;
   chapters: SolutionStoryChapter[];
@@ -28,14 +27,6 @@ export const solutionByRole: SolutionPage[] = [
       "Perry gives private capital legal teams one connected view of documents, entities, obligations, legal decisions and external collaboration.",
     cardDescription:
       "Your only platform for fund, deal, and portfolio legal work.",
-    kpis: [
-      "Less repeated legal research",
-      "More consistent negotiation positions",
-      "Fewer missed obligations",
-      "Faster responses to the business",
-      "Better control of external counsel",
-      "Stronger institutional knowledge",
-    ],
     heroImageSrc: "/images/solutions/in-house-lawyer.jpg",
     cardImageSrc: "/images/solutions/cards/in-house-lawyer.jpg",
     chapters: [

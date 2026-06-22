@@ -1,6 +1,12 @@
-import { whyPerryItems } from "@/lib/solution-why-perry-content";
+import { getWhyPerryContent } from "@/lib/solution-why-perry-content";
 
-export function SolutionWhyPerrySection() {
+type SolutionWhyPerrySectionProps = {
+  persona: string;
+};
+
+export function SolutionWhyPerrySection({ persona }: SolutionWhyPerrySectionProps) {
+  const { heading, items } = getWhyPerryContent(persona);
+
   return (
     <section className="border-b border-border/60 bg-background px-6 py-20 sm:py-24">
       <div className="section-container">
@@ -10,12 +16,12 @@ export function SolutionWhyPerrySection() {
             Why Perry
           </p>
           <h2 className="mt-1 text-xl font-medium tracking-tight text-balance sm:text-2xl">
-            Why funds need Perry
+            {heading}
           </h2>
         </div>
 
         <div className="mt-12 grid gap-10 divide-y divide-border/80 sm:grid-cols-2 sm:gap-x-8 sm:divide-y-0 lg:grid-cols-4 lg:gap-0 lg:divide-x lg:divide-y-0">
-          {whyPerryItems.map((item, index) => (
+          {items.map((item, index) => (
             <div
               key={item.title}
               className="py-10 first:pt-0 last:pb-0 sm:py-0 lg:px-8 lg:first:pl-0 lg:last:pr-0"
