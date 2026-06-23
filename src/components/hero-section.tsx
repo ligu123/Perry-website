@@ -57,7 +57,7 @@ export function HeroSection() {
               one platform, intentionally built for every legal touchpoint in funds.
             </p>
 
-            <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-10">
               <Button
                 size="lg"
                 className="bg-white text-black hover:bg-white/90"
@@ -71,14 +71,6 @@ export function HeroSection() {
               >
                 Book a demo
                 <ArrowRight />
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-white/80 bg-transparent text-white hover:bg-white/10 hover:text-white"
-                render={<Link href="/#platform" />}
-              >
-                Explore product
               </Button>
             </div>
           </div>

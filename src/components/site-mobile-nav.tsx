@@ -148,6 +148,17 @@ export function SiteMobileNav({ contrast = "on-light" }: SiteMobileNavProps) {
         </div>
 
         <div className="flex-1 overflow-y-auto px-4 py-2">
+          <div
+            className={cn(
+              "border-b py-1",
+              onDark ? "border-white/10" : "border-border/60",
+            )}
+          >
+            <Link href="/" className={navLinkClassName} onClick={close}>
+              Homepage
+            </Link>
+          </div>
+
           <MobileNavSection
             title="Product"
             open={productOpen}
