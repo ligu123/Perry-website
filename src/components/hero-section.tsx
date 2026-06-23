@@ -36,6 +36,16 @@ export function HeroSection() {
       <div className="section-container flex min-h-svh flex-col px-6 pb-12 pt-24">
         <div className="flex flex-1 items-center">
           <div className="w-full text-left">
+            <Link href="/" className="mb-6 inline-flex md:hidden">
+              <Image
+                src="/perry-logo-white.png"
+                alt="Perry"
+                width={1419}
+                height={384}
+                priority
+                className="h-6 w-auto"
+              />
+            </Link>
             <h1 className="font-source-serif text-5xl font-medium tracking-tight text-balance text-white sm:text-6xl md:text-7xl">
               The Legal OS
               <br />

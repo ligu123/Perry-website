@@ -35,7 +35,7 @@ export function SiteHeader() {
           <div className="md:hidden">
             <SiteMobileNav contrast={contrast} />
           </div>
-          <Link href="/" className="flex h-6 shrink-0 items-center">
+          <Link href="/" className="hidden h-6 shrink-0 items-center md:flex">
             <Image
               src={onDark ? "/perry-logo-white.png" : "/perry-logo.png"}
               alt="Perry"

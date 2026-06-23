@@ -2,6 +2,7 @@
 
 import Image from "@/components/asset-image";
 import Link from "next/link";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
   useCallback,
   useEffect,
@@ -137,6 +138,14 @@ function getContentAspect(layer: PlatformLayer) {
   return Math.max(getLayerAspectRatio(layer), INACTIVE_ASPECT);
 }
 
+/** Unified active-layer aspect — tallest layer slot for consistent carousel height. */
+function getMaxContentAspect() {
+  return Math.max(
+    INACTIVE_ASPECT,
+    ...platformLayersByElevation.map((layer) => getContentAspect(layer)),
+  );
+}
+
 /** Slot height — inactive slab at rest; interpolates to full content while rising. */
 function getSlotAspect(layer: PlatformLayer, rel: number) {
   const fullAspect = getContentAspect(layer);
@@ -228,8 +237,12 @@ function getSlotVisualState(rel: number, animate: boolean): SlotVisualState {
 }
 
 /** Layers still on screen (exiting layer kept until rel <= -1). */
-function getVisibleLayers(floatIndex: number) {
+function getVisibleLayers(floatIndex: number, discreteOnly = false) {
   const clamped = clamp(floatIndex, 0, LAYER_COUNT - 1);
+  if (discreteOnly) {
+    const layer = platformLayersByElevation[clamped];
+    return [{ layer, layerIndex: clamped, rel: 0 }];
+  }
   return platformLayersByElevation
     .map((layer, layerIndex) => ({
       layer,
@@ -282,6 +295,7 @@ type LayerSlotProps = {
   floatIndex: number;
   width: number;
   animate: boolean;
+  uniformAspect?: number;
 };
 
 function LayerSlot({
@@ -291,10 +305,11 @@ function LayerSlot({
   floatIndex,
   width,
   animate,
+  uniformAspect,
 }: LayerSlotProps) {
   const { contentOpacity, baseOpacity, hidden } = getSlotVisualState(rel, animate);
   const offsetY = width > 0 ? getStackOffsetY(rel, layer, floatIndex, width) : 0;
-  const slotAspect = getSlotAspect(layer, rel);
+  const slotAspect = uniformAspect ?? getSlotAspect(layer, rel);
 
   if (hidden) return null;
 
@@ -341,6 +356,7 @@ function LayerSlot({
 type UnifiedLayerStackProps = {
   floatIndex: number;
   animate: boolean;
+  discreteOnly?: boolean;
 };
 
 /**
@@ -348,12 +364,16 @@ type UnifiedLayerStackProps = {
  * `rel = layerIndex - floatIndex`. Active layer at rel≈0, inactive stack below,
  * exiting layer slides upward at rel<0 (same motion as the reference sequence).
  */
-function UnifiedLayerStack({ floatIndex, animate }: UnifiedLayerStackProps) {
+function UnifiedLayerStack({
+  floatIndex,
+  animate,
+  discreteOnly = false,
+}: UnifiedLayerStackProps) {
   const stackRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
 
   const clamped = clamp(floatIndex, 0, LAYER_COUNT - 1);
-  const visibleLayers = getVisibleLayers(clamped);
+  const visibleLayers = getVisibleLayers(clamped, discreteOnly);
 
   useLayoutEffect(() => {
     const el = stackRef.current;
@@ -375,9 +395,16 @@ function UnifiedLayerStack({ floatIndex, animate }: UnifiedLayerStackProps) {
 
   if (visibleLayers.length === 0) return null;
 
-  const fixedStackHeight = width > 0 ? getMaxStackHeight(width) : undefined;
+  const uniformAspect = discreteOnly ? getMaxContentAspect() : undefined;
+
+  const fixedStackHeight =
+    width > 0
+      ? discreteOnly
+        ? width * getMaxContentAspect()
+        : getMaxStackHeight(width)
+      : undefined;
   const centeringOffset =
-    width > 0 ? getStackVerticalOffset(floatIndex, width) : 0;
+    width > 0 && !discreteOnly ? getStackVerticalOffset(floatIndex, width) : 0;
 
   return (
     <div
@@ -402,6 +429,7 @@ function UnifiedLayerStack({ floatIndex, animate }: UnifiedLayerStackProps) {
           floatIndex={clamped}
           width={width}
           animate={animate}
+          uniformAspect={uniformAspect}
         />
       ))}
     </div>
@@ -411,9 +439,10 @@ function UnifiedLayerStack({ floatIndex, animate }: UnifiedLayerStackProps) {
 type LayerStackProps = {
   floatIndex: number;
   animate: boolean;
+  discreteOnly?: boolean;
 };
 
-function LayerStack({ floatIndex, animate }: LayerStackProps) {
+function LayerStack({ floatIndex, animate, discreteOnly = false }: LayerStackProps) {
   return (
     <div className="relative flex w-full flex-col items-center justify-center pb-2">
       <div
@@ -422,7 +451,11 @@ function LayerStack({ floatIndex, animate }: LayerStackProps) {
           LAYER_STACK_MAX_WIDTH,
         )}
       >
-        <UnifiedLayerStack floatIndex={floatIndex} animate={animate} />
+        <UnifiedLayerStack
+          floatIndex={floatIndex}
+          animate={animate}
+          discreteOnly={discreteOnly}
+        />
       </div>
 
       <div
@@ -574,8 +607,13 @@ export function PlatformArchitectureExplorer({
   className,
 }: PlatformArchitectureExplorerProps) {
   const runwayRef = useRef<HTMLDivElement>(null);
-  const [floatIndex, setFloatIndex] = useState(0);
-  const [animate, setAnimate] = useState(true);
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [scrollFloatIndex, setScrollFloatIndex] = useState(0);
+  const [discreteIndex, setDiscreteIndex] = useState(0);
+
+  const useScrollDrive = isLargeScreen && !prefersReducedMotion;
+  const floatIndex = useScrollDrive ? scrollFloatIndex : discreteIndex;
 
   const activeIndex = clamp(Math.round(floatIndex), 0, LAYER_COUNT - 1);
   const activeLayer = platformLayersByElevation[activeIndex];
@@ -585,14 +623,31 @@ export function PlatformArchitectureExplorer({
     [floatIndex],
   );
 
+  const goToPreviousLayer = useCallback(() => {
+    setDiscreteIndex((current) =>
+      current === 0 ? LAYER_COUNT - 1 : current - 1,
+    );
+  }, []);
+
+  const goToNextLayer = useCallback(() => {
+    setDiscreteIndex((current) =>
+      current === LAYER_COUNT - 1 ? 0 : current + 1,
+    );
+  }, []);
+
   const scrollToLayer = useCallback(
     (layerId: string) => {
       const index = platformLayersByElevation.findIndex((l) => l.id === layerId);
       if (index < 0) return;
 
+      if (!useScrollDrive) {
+        setDiscreteIndex(index);
+        return;
+      }
+
       const runway = runwayRef.current;
-      if (!runway || !animate) {
-        setFloatIndex(index);
+      if (!runway) {
+        setDiscreteIndex(index);
         return;
       }
 
@@ -602,17 +657,31 @@ export function PlatformArchitectureExplorer({
         behavior: "smooth",
       });
     },
-    [animate],
+    [useScrollDrive],
   );
 
-  // Disable scroll-hijack when the user prefers reduced motion.
-  useEffect(() => {
-    setAnimate(!window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  useLayoutEffect(() => {
+    const motionMq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const screenMq = window.matchMedia("(min-width: 1024px)");
+
+    const update = () => {
+      setPrefersReducedMotion(motionMq.matches);
+      setIsLargeScreen(screenMq.matches);
+    };
+
+    update();
+    motionMq.addEventListener("change", update);
+    screenMq.addEventListener("change", update);
+
+    return () => {
+      motionMq.removeEventListener("change", update);
+      screenMq.removeEventListener("change", update);
+    };
   }, []);
 
   // Drive floatIndex from scroll progress while the section is in view.
   useEffect(() => {
-    if (!animate) return;
+    if (!useScrollDrive) return;
 
     const update = () => {
       const runway = runwayRef.current;
@@ -623,7 +692,7 @@ export function PlatformArchitectureExplorer({
       if (rect.bottom <= 0 || rect.top >= window.innerHeight) return;
 
       const progress = getRunwayProgress(runway);
-      setFloatIndex(progress * (LAYER_COUNT - 1));
+      setScrollFloatIndex(progress * (LAYER_COUNT - 1));
     };
 
     update();
@@ -633,7 +702,7 @@ export function PlatformArchitectureExplorer({
       window.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);
     };
-  }, [animate, sectionRef]);
+  }, [useScrollDrive, sectionRef]);
 
   const explorerContent = (
     <div className="relative isolate mx-auto w-full max-w-8xl overflow-visible rounded-md border border-white/10">
@@ -669,7 +738,11 @@ export function PlatformArchitectureExplorer({
         </div>
 
         <div className="flex w-full items-center justify-center self-center overflow-visible">
-          <LayerStack floatIndex={floatIndex} animate={animate} />
+          <LayerStack
+            floatIndex={floatIndex}
+            animate={useScrollDrive}
+            discreteOnly={!useScrollDrive}
+          />
         </div>
 
         <div className="hidden self-center lg:block">
@@ -679,11 +752,32 @@ export function PlatformArchitectureExplorer({
         <div className="border-t border-white/10 pt-6 lg:hidden">
           <DetailPanel layer={activeLayer} />
         </div>
+
+        {!isLargeScreen && (
+          <div className="flex justify-center gap-3">
+            <button
+              type="button"
+              onClick={goToPreviousLayer}
+              aria-label="Previous layer"
+              className="flex size-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+            >
+              <ChevronLeft className="size-5" strokeWidth={1.5} />
+            </button>
+            <button
+              type="button"
+              onClick={goToNextLayer}
+              aria-label="Next layer"
+              className="flex size-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+            >
+              <ChevronRight className="size-5" strokeWidth={1.5} />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
 
-  if (!animate) {
+  if (!useScrollDrive) {
     return (
       <>
         {showHeader && <PlatformArchitectureHeader className={HEADER_GRID_GAP} />}
