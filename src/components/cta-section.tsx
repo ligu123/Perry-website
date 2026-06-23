@@ -16,7 +16,7 @@ type CtaSectionProps = {
 
 const defaultTitle = "Run your fund's legal work from one connected platform.";
 const defaultDescription =
-  "Book a demo to see how Perry helps in-house legal teams unify fund formation, deal execution, and portfolio governance.";
+  "Book a demo to see how Perry helps in-house teams unify fund formation, deal execution, and portfolio governance.";
 const defaultImageSrc = "/images/cta/jaanus-jagomagi-unsplash.jpg";
 
 export function CtaSection({
