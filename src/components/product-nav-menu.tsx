@@ -18,7 +18,7 @@ export function ProductNavMenu({ contrast = "on-light" }: ProductNavMenuProps) {
           <Link
             href={`/product/${stage.slug}`}
             className={cn(
-              "block rounded-lg px-3 py-2 text-sm transition-colors",
+              "block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors",
               onDark
                 ? "text-white/70 hover:bg-white/10 hover:text-white"
                 : "text-muted-foreground hover:text-foreground",

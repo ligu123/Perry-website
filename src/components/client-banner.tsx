@@ -80,7 +80,7 @@ export function ClientBanner({ embedded = false, variant = "default" }: ClientBa
 
   if (embedded) {
     return (
-      <div aria-label="Trusted by" className="w-full">
+      <div aria-label="Trusted by" className={cn("w-full", isHero && "mx-auto max-w-4xl")}>
         {content}
       </div>
     );

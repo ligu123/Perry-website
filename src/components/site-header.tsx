@@ -8,7 +8,7 @@ import { SiteMobileNav } from "@/components/site-mobile-nav";
 import { SiteNav } from "@/components/site-nav";
 import { Button } from "@/components/ui/button";
 import { useAdaptiveHeader } from "@/hooks/use-adaptive-header";
-import { bookDemoUrl } from "@/lib/navigation";
+import { bookDemoUrl, loginUrl } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 
 export function SiteHeader() {
@@ -30,8 +30,8 @@ export function SiteHeader() {
         onDark ? "text-white" : "text-foreground",
       )}
     >
-      <div className="section-container flex h-16 items-center gap-3 px-6">
-        <div className="flex items-center gap-2">
+      <div className="section-container flex h-16 items-center gap-3 px-6 md:grid md:grid-cols-[1fr_auto_1fr]">
+        <div className="flex items-center gap-2 justify-self-start">
           <div className="md:hidden">
             <SiteMobileNav contrast={contrast} />
           </div>
@@ -47,11 +47,11 @@ export function SiteHeader() {
           </Link>
         </div>
 
-        <div className="hidden flex-1 justify-center md:flex">
+        <div className="hidden justify-self-center md:flex">
           <SiteNav contrast={contrast} />
         </div>
 
-        <div className="ml-auto flex items-center gap-2 sm:gap-3">
+        <div className="ml-auto flex items-center gap-2 justify-self-end sm:gap-3 md:ml-0">
           <Button
             variant="outline"
             size="sm"
@@ -59,9 +59,15 @@ export function SiteHeader() {
               onDark &&
                 "border-white/70 bg-transparent text-white hover:bg-white/10 hover:text-white",
             )}
-            render={<Link href="/#contact" />}
+            render={
+              <Link
+                href={loginUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              />
+            }
           >
-            Get started
+            Log in
           </Button>
           <Button
             size="sm"

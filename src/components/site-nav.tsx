@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { ProductNavMenu } from "@/components/product-nav-menu";
-import { SolutionNavMenu } from "@/components/solution-nav-menu";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -64,17 +63,6 @@ export function SiteNav({ contrast = "on-light" }: SiteNavProps) {
           </NavigationMenuTrigger>
           <NavigationMenuContent className="p-0">
             <ProductNavMenu contrast={contrast} />
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-
-        <NavigationMenuItem value="solution">
-          <NavigationMenuTrigger className={navTriggerClassName}>
-            Solution
-          </NavigationMenuTrigger>
-          <NavigationMenuContent className="p-0">
-            <div className="p-2.5">
-              <SolutionNavMenu contrast={contrast} />
-            </div>
           </NavigationMenuContent>
         </NavigationMenuItem>
 

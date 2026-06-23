@@ -1,5 +1,4 @@
 import Image from "@/components/asset-image";
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { solutionByIndustry, solutionByRole } from "@/lib/solution-navigation";
@@ -30,10 +29,9 @@ export function SolutionSection() {
       <div className="scrollbar-hide mt-16 w-full max-w-full overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <div className="flex w-max flex-nowrap gap-2 pl-[max(1.5rem,calc((100vw-var(--container-8xl))/2+1.5rem))] pr-6">
           {personaCards.map((item) => (
-              <Link
+              <article
                 key={item.slug}
-                href={`/solution/${item.slug}`}
-                className="group flex aspect-[2/4] h-[560px] w-[320px] shrink-0 snap-start flex-col overflow-hidden rounded-none border border-border bg-card transition-colors hover:bg-muted/40"
+                className="group flex aspect-[2/4] h-[560px] w-[320px] shrink-0 snap-start flex-col overflow-hidden rounded-none border border-border bg-card"
               >
                 <div className="relative min-h-0 flex-1">
                   <Image
@@ -41,20 +39,23 @@ export function SolutionSection() {
                     alt=""
                     fill
                     unoptimized
-                    className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                    className="object-cover"
                   />
                 </div>
 
                 <div className="shrink-0 p-4">
                   <div className="flex items-start justify-between gap-3">
                     <h3 className="text-sm font-medium tracking-tight">{item.label}</h3>
-                    <ArrowRight className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+                    <ArrowRight
+                      aria-hidden
+                      className="size-4 shrink-0 text-muted-foreground"
+                    />
                   </div>
                   <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
                     {item.cardDescription}
                   </p>
                 </div>
-              </Link>
+              </article>
             ))}
         </div>
       </div>

@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "@/components/asset-image";
+import { Pause, Play } from "lucide-react";
 import { useEffect, useState, type ComponentType } from "react";
 
+import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { intelligenceFlowStages } from "@/lib/platform-intelligence-flow";
 import { cn } from "@/lib/utils";
@@ -143,34 +145,54 @@ function IntelligencePipeline({ stageId }: { stageId: string }) {
     intelligenceFlowStages[0];
 
   return (
-    <div className="grid grid-cols-1 gap-8 lg:grid-cols-4 lg:gap-1">
-      {stage.columns.map((column, index) => {
-        const Illustration = columnIllustrations[index];
+    <div className={cn(mobileScrollWrapperClass, "lg:overflow-visible")}>
+      <div
+        className={cn(
+          "flex w-max flex-nowrap gap-6",
+          mobileScrollInsetClass,
+          "lg:grid lg:w-full lg:grid-cols-4 lg:gap-1 lg:pl-0 lg:pr-0",
+        )}
+      >
+        {stage.columns.map((column, index) => {
+          const Illustration = columnIllustrations[index];
 
-        return (
-          <PipelineColumn
-            key={column.label}
-            label={column.label}
-            items={column.items}
-            imageSrc={column.imageSrc}
-            Illustration={Illustration}
-          />
-        );
-      })}
+          return (
+            <div
+              key={column.label}
+              className="w-[min(80vw,18rem)] shrink-0 snap-start lg:w-full lg:shrink"
+            >
+              <PipelineColumn
+                label={column.label}
+                items={column.items}
+                imageSrc={column.imageSrc}
+                Illustration={Illustration}
+              />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
 
 const TAB_AUTO_ADVANCE_MS = 8000;
 
+const mobileScrollInsetClass =
+  "pl-[max(1.5rem,calc((100vw-var(--container-8xl))/2+1.5rem))] pr-6";
+
+const mobileScrollWrapperClass =
+  "scrollbar-hide w-full max-w-full overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden";
+
 function StageProgressBar({
   index,
   activeIndex,
   activeTab,
+  isPaused,
 }: {
   index: number;
   activeIndex: number;
   activeTab: string;
+  isPaused: boolean;
 }) {
   return (
     <div
@@ -185,7 +207,10 @@ function StageProgressBar({
       {index === activeIndex && (
         <span
           key={activeTab}
-          className="block h-full bg-foreground animate-tab-progress motion-reduce:animate-none"
+          className={cn(
+            "block h-full bg-foreground animate-tab-progress motion-reduce:animate-none",
+            isPaused && "[animation-play-state:paused]",
+          )}
           style={{ animationDuration: `${TAB_AUTO_ADVANCE_MS}ms` }}
         />
       )}
@@ -195,6 +220,7 @@ function StageProgressBar({
 
 export function PlatformIntelligenceSection() {
   const [activeTab, setActiveTab] = useState(intelligenceFlowStages[0].id);
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -214,8 +240,8 @@ export function PlatformIntelligenceSection() {
   const activeIndex = intelligenceFlowStages.findIndex((stage) => stage.id === activeTab);
 
   return (
-    <section className="bg-[#ffffff] px-6 py-32">
-      <div className="section-container">
+    <section className="overflow-x-hidden bg-[#ffffff] py-32">
+      <div className="section-container px-6">
         <div className="mx-auto max-w-3xl text-center">
           <p className="flex items-center justify-center gap-2 text-sm font-medium tracking-wide text-muted-foreground">
             <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
@@ -229,83 +255,102 @@ export function PlatformIntelligenceSection() {
             actions, insights and collaboration.
           </p>
         </div>
+      </div>
 
-        <Tabs
-          value={activeTab}
-          onValueChange={setActiveTab}
-          className="mt-20 flex flex-col"
-        >
-          <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4 lg:gap-3">
-            <TabsList variant="line" className="contents">
-              {intelligenceFlowStages.map((stage, index) => {
-                const TabIcon = stage.icon;
+      <Tabs
+        value={activeTab}
+        onValueChange={setActiveTab}
+        className="mt-20 flex flex-col"
+      >
+        <div className="section-container px-6">
+          <div className="flex items-end gap-4">
+            <div className="grid min-w-0 flex-1 grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:gap-3">
+              <TabsList variant="line" className="contents">
+                {intelligenceFlowStages.map((stage, index) => {
+                  const TabIcon = stage.icon;
 
-                return (
-                  <div key={stage.id} className="flex flex-col gap-2 max-lg:gap-3 max-lg:py-2">
-                    <StageProgressBar
-                      index={index}
-                      activeIndex={activeIndex}
-                      activeTab={activeTab}
-                    />
-                    <TabsTrigger
-                      id={`legal-os-tab-${stage.id}`}
-                      value={stage.id}
-                      aria-controls={`legal-os-panel-${stage.id}`}
-                      className={cn(
-                        "group relative flex h-auto w-full min-h-0 flex-none flex-col items-stretch justify-start overflow-hidden rounded-none border border-transparent bg-transparent !p-0 text-left opacity-40 !shadow-none transition-opacity",
-                        "text-muted-foreground",
-                        "data-active:!border-transparent data-active:!bg-transparent data-active:text-foreground data-active:!opacity-100 data-active:!shadow-none",
-                        "after:!hidden focus-visible:ring-2 focus-visible:ring-ring/50",
-                      )}
+                  return (
+                    <div
+                      key={stage.id}
+                      className="flex flex-col gap-2 max-lg:gap-3 max-lg:py-2"
                     >
-                      <div className="flex items-center gap-3 p-0 max-lg:py-0">
-                        <div className="flex size-7 shrink-0 items-center justify-center rounded-md bg-muted/50 group-data-active:bg-muted">
-                          <TabIcon
-                            className="size-[16px] shrink-0 text-muted-foreground group-data-active:text-foreground"
-                            aria-hidden
-                          />
+                      <StageProgressBar
+                        index={index}
+                        activeIndex={activeIndex}
+                        activeTab={activeTab}
+                        isPaused={isPaused}
+                      />
+                      <TabsTrigger
+                        id={`legal-os-tab-${stage.id}`}
+                        value={stage.id}
+                        aria-controls={`legal-os-panel-${stage.id}`}
+                        className={cn(
+                          "group relative flex h-auto w-full min-h-0 flex-none flex-col items-stretch justify-start overflow-hidden rounded-none border border-transparent bg-transparent !p-0 text-left opacity-40 !shadow-none transition-opacity",
+                          "text-muted-foreground",
+                          "data-active:!border-transparent data-active:!bg-transparent data-active:text-foreground data-active:!opacity-100 data-active:!shadow-none",
+                          "after:!hidden focus-visible:ring-2 focus-visible:ring-ring/50",
+                        )}
+                      >
+                        <div className="flex items-center gap-3 p-0 max-lg:py-0">
+                          <div className="flex size-7 shrink-0 items-center justify-center rounded-md bg-muted/50 group-data-active:bg-muted">
+                            <TabIcon
+                              className="size-[16px] shrink-0 text-muted-foreground group-data-active:text-foreground"
+                              aria-hidden
+                            />
+                          </div>
+                          <p className="min-w-0 flex-1 truncate text-lg font-md leading-snug text-muted-foreground group-data-active:text-foreground">
+                            {index + 1}. {stage.tabLabel}
+                          </p>
                         </div>
-                        <p className="min-w-0 flex-1 truncate text-lg font-md leading-snug text-muted-foreground group-data-active:text-foreground">
-                          {index + 1}. {stage.tabLabel}
-                        </p>
-                      </div>
-                    </TabsTrigger>
-                  </div>
-                );
-              })}
-            </TabsList>
+                      </TabsTrigger>
+                    </div>
+                  );
+                })}
+              </TabsList>
+            </div>
+
+            <Button
+              type="button"
+              variant="outline"
+              size="icon-sm"
+              className="shrink-0"
+              aria-label={isPaused ? "Resume progress indicator" : "Pause progress indicator"}
+              aria-pressed={isPaused}
+              onClick={() => setIsPaused((paused) => !paused)}
+            >
+              {isPaused ? <Play /> : <Pause />}
+            </Button>
           </div>
+        </div>
 
-          <div className="mt-6 grid">
-            {intelligenceFlowStages.map((stage) => {
-              const isActive = activeTab === stage.id;
+        <div className="mt-6">
+          {intelligenceFlowStages.map((stage) => {
+            const isActive = activeTab === stage.id;
 
-              return (
+            return (
+              <div
+                key={stage.id}
+                role="tabpanel"
+                id={`legal-os-panel-${stage.id}`}
+                aria-labelledby={`legal-os-tab-${stage.id}`}
+                aria-hidden={!isActive}
+                className={cn("outline-none", !isActive && "hidden")}
+              >
                 <div
-                  key={stage.id}
-                  role="tabpanel"
-                  id={`legal-os-panel-${stage.id}`}
-                  aria-labelledby={`legal-os-tab-${stage.id}`}
-                  aria-hidden={!isActive}
                   className={cn(
-                    "col-start-1 row-start-1 p-0 outline-none",
-                    !isActive && "invisible pointer-events-none",
+                    "lg:section-container lg:px-6",
+                    isActive && "animate-pipeline-fade-in motion-reduce:animate-none",
                   )}
                 >
-                  <div
-                    className={cn(
-                      "bg-muted/30 p-3",
-                      isActive && "animate-pipeline-fade-in motion-reduce:animate-none",
-                    )}
-                  >
+                  <div className="lg:bg-muted/30 lg:p-3">
                     <IntelligencePipeline stageId={stage.id} />
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        </Tabs>
-      </div>
+              </div>
+            );
+          })}
+        </div>
+      </Tabs>
     </section>
   );
 }

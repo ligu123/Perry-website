@@ -6,7 +6,6 @@ import { useCallback, useEffect, useId, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 
 import { ProductNavMenu } from "@/components/product-nav-menu";
-import { SolutionNavMenu } from "@/components/solution-nav-menu";
 import { Button } from "@/components/ui/button";
 import type { HeaderContrast } from "@/hooks/use-adaptive-header";
 import { simpleNavLinks } from "@/lib/navigation";
@@ -32,7 +31,7 @@ function MobileNavSection({
   return (
     <div
       className={cn(
-        "border-b last:border-b-0",
+        "border-b py-1 last:border-b-0",
         onDark ? "border-white/10" : "border-border/60",
       )}
     >
@@ -41,7 +40,7 @@ function MobileNavSection({
         onClick={onToggle}
         aria-expanded={open}
         className={cn(
-          "flex w-full items-center justify-between py-3 text-sm font-medium transition-colors",
+          "flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors",
           onDark ? "text-white" : "text-foreground",
         )}
       >
@@ -65,12 +64,10 @@ export function SiteMobileNav({ contrast = "on-light" }: SiteMobileNavProps) {
   const [mounted, setMounted] = useState(false);
   const [open, setOpen] = useState(false);
   const [productOpen, setProductOpen] = useState(false);
-  const [solutionOpen, setSolutionOpen] = useState(false);
 
   const close = useCallback(() => {
     setOpen(false);
     setProductOpen(false);
-    setSolutionOpen(false);
   }, []);
 
   useEffect(() => {
@@ -94,7 +91,7 @@ export function SiteMobileNav({ contrast = "on-light" }: SiteMobileNavProps) {
   }, [open, close]);
 
   const navLinkClassName = cn(
-    "block rounded-lg px-3 py-2 text-sm transition-colors",
+    "block w-full rounded-lg px-3 py-2 text-left text-sm transition-colors",
     onDark
       ? "text-white/70 hover:bg-white/10 hover:text-white"
       : "text-muted-foreground hover:bg-muted hover:text-foreground",
@@ -147,7 +144,7 @@ export function SiteMobileNav({ contrast = "on-light" }: SiteMobileNavProps) {
           </Button>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-4 py-2">
+        <div className="flex-1 overflow-y-auto px-4 py-2 text-left">
           <div
             className={cn(
               "border-b py-1",
@@ -171,22 +168,6 @@ export function SiteMobileNav({ contrast = "on-light" }: SiteMobileNavProps) {
               }}
             >
               <ProductNavMenu contrast={contrast} />
-            </div>
-          </MobileNavSection>
-
-          <MobileNavSection
-            title="Solution"
-            open={solutionOpen}
-            onToggle={() => setSolutionOpen((current) => !current)}
-            onDark={onDark}
-          >
-            <div
-              className="flex flex-col"
-              onClick={(event) => {
-                if ((event.target as HTMLElement).closest("a")) close();
-              }}
-            >
-              <SolutionNavMenu contrast={contrast} className="flex-col gap-4" />
             </div>
           </MobileNavSection>
 

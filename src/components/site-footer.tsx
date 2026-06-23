@@ -2,10 +2,8 @@ import Image from "@/components/asset-image";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 
-import { footerNavLinks } from "@/lib/navigation";
 import { legalPages } from "@/lib/legal-pages";
 import { productLifecycle } from "@/lib/product-navigation";
-import { allSolutionPages } from "@/lib/solution-navigation";
 
 export function SiteFooter() {
   return (
@@ -43,7 +41,7 @@ export function SiteFooter() {
             </div>
           </div>
 
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             <div>
               <p className="text-sm font-medium">Product</p>
               <nav className="mt-3 flex flex-col gap-2">
@@ -60,32 +58,14 @@ export function SiteFooter() {
             </div>
 
             <div>
-              <p className="text-sm font-medium">Solutions</p>
+              <p className="text-sm font-medium">About</p>
               <nav className="mt-3 flex flex-col gap-2">
-                {allSolutionPages.map((page) => (
-                  <Link
-                    key={page.slug}
-                    href={`/solution/${page.slug}`}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    {page.label}
-                  </Link>
-                ))}
-              </nav>
-            </div>
-
-            <div>
-              <p className="text-sm font-medium">Navigation</p>
-              <nav className="mt-3 flex flex-col gap-2">
-                {footerNavLinks.map((link) => (
-                  <Link
-                    key={link.label}
-                    href={link.href}
-                    className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+                <Link
+                  href="/about"
+                  className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  About
+                </Link>
               </nav>
             </div>
 

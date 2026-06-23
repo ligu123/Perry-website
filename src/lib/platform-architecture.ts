@@ -91,7 +91,6 @@ export const platformLayers: PlatformLayer[] = [
         label: "Collaboration Layer",
         description:
           "Connect legal teams, fund operations, external counsel, and stakeholders in a shared workspace with clear ownership and audit trails.",
-        href: "/solution/in-house-lawyer",
         icon: Handshake,
         variant: "mint",
         row: 0,
@@ -131,7 +130,7 @@ export const platformLayers: PlatformLayer[] = [
     placeholderLabel: "Fund Entities",
     imageSrc: "/platform-layers/fund-entity-layer.png",
     imageWidth: 2200,
-    imageHeight: 1020,
+    imageHeight: 1023,
     sidebarDescription:
       "A structured system of record for fund entities, investor relationships, commitments, and portfolio-level legal obligations.",
     elevation: 1,
@@ -157,7 +156,7 @@ export const platformLayers: PlatformLayer[] = [
     placeholderLabel: "Security",
     imageSrc: "/platform-layers/security-layer.png",
     imageWidth: 2200,
-    imageHeight: 1020,
+    imageHeight: 1023,
     sidebarDescription:
       "Enterprise-grade security, access control, and compliance infrastructure that underpins every workflow on the platform.",
     elevation: 0,

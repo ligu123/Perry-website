@@ -23,7 +23,7 @@ const teamMembers = [
     linkedinUrl: "https://www.linkedin.com/in/shashwatpatel/",
   },
   {
-    name: "Jacobo König",
+    name: "Jaco Koenig",
     role: "Founder & CTO",
     intro:
       "Serial founder and CTO with 14 years building products at startups including Doshi, Whering, and Binary Mango.",
@@ -59,7 +59,7 @@ export default function AboutPage() {
     <div className="border-t border-border/60">
       <StoryPageHero
         eyebrow="About Perry"
-        title="Built by actual private capital lawyers"
+        title="Built by seasoned private capital lawyers"
         description="Perry comes from years spent inside firms and fund teams—negotiating deals, closing funds, and managing portfolio obligations. We built the platform we wished we had."
         belowContent={
           <div className="grid gap-6 sm:grid-cols-3">
