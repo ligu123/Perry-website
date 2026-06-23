@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 
 import { ClientBanner } from "@/components/client-banner";
 import { Button } from "@/components/ui/button";
+import { withBasePath } from "@/lib/base-path";
 import { bookDemoUrl } from "@/lib/navigation";
 
 export function HeroSection() {
@@ -20,19 +21,11 @@ export function HeroSection() {
         aria-hidden
         className="absolute inset-0 -z-20 size-full object-cover object-center"
       >
-        <source src="/videos/hero/hero.mp4" type="video/mp4" />
+        <source src={withBasePath("/videos/hero/hero.mp4")} type="video/mp4" />
       </video>
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-emerald-950/12"
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,rgb(0_0_0/0.82)_0%,rgb(0_0_0/0.55)_28%,rgb(0_0_0/0.25)_48%,transparent_72%)]"
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 bg-[linear-gradient(to_bottom,rgb(0_0_0/0.35)_0%,transparent_40%,rgb(0_0_0/0.2)_100%)]"
+        className="absolute inset-0 -z-10 bg-black/25"
       />
 
       <div className="section-container flex min-h-svh flex-col px-6 pb-12 pt-24">
