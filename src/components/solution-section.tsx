@@ -21,7 +21,7 @@ export function SolutionSection() {
           </h2>
           <p className="mt-4 text-muted-foreground text-pretty">
             One connected workflow that brings in-house teams, portfolio
-            companies, LPs, and advisers into the fund&apos;s legal work.
+            companies, LPs, and advisers into the fund's legal work.
           </p>
         </div>
       </div>
