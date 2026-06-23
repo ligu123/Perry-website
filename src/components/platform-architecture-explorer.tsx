@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "@/components/asset-image";
-import Link from "next/link";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
   useCallback,
   useEffect,
@@ -12,7 +12,6 @@ import {
   type RefObject,
 } from "react";
 
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
   getBlendedPanelTint,
@@ -25,7 +24,6 @@ import {
   platformLayersByElevation,
   type PlatformLayer,
 } from "@/lib/platform-architecture";
-import { primaryProductLifecycleHref } from "@/lib/product-navigation";
 
 /* -------------------------------------------------------------------------- */
 /*  Tunable constants                                                         */
@@ -62,8 +60,6 @@ const INACTIVE_LAYER_OPACITY = 0.6;
 const PANEL_TINT_ALPHA = 0.09;
 /** Fraction of bottom slack applied as downward offset at the final layer (0–1). */
 const END_STACK_CENTER_BIAS = 0.5;
-/** Document scroll budget per layer on mobile (vh). */
-const MOBILE_LAYER_SCROLL_VH = 60;
 
 const LAYER_COUNT = platformLayersByElevation.length;
 
@@ -127,15 +123,6 @@ function getRunwayProgress(runway: HTMLElement) {
   const rect = runway.getBoundingClientRect();
   const scrolled = clamp(SITE_HEADER_OFFSET_PX - rect.top, 0, scrollable);
   return scrolledToAnimationProgress(scrolled, scrollable);
-}
-
-/** Simple 0..1 scroll progress for mobile layer switching (no buffers). */
-function getMobileRunwayProgress(runway: HTMLElement) {
-  const scrollable = getRunwayScrollable(runway);
-  if (scrollable <= 0) return 0;
-  const rect = runway.getBoundingClientRect();
-  const scrolled = clamp(SITE_HEADER_OFFSET_PX - rect.top, 0, scrollable);
-  return scrolled / scrollable;
 }
 
 type SlotVisualState = {
@@ -547,7 +534,6 @@ function DetailPanel({ layer }: DetailPanelProps) {
   const tile = getPrimaryTile(layer);
   const Icon = tile.icon;
   const isLayerPrimary = tile.id === layer.id;
-  const href = tile.href ?? primaryProductLifecycleHref;
 
   return (
     <div className="flex flex-col">
@@ -563,14 +549,6 @@ function DetailPanel({ layer }: DetailPanelProps) {
       <p className="mt-1.5 text-sm leading-snug text-white/50">
         {isLayerPrimary ? layer.sidebarDescription : tile.description}
       </p>
-      <Button
-        variant="outline"
-        size="sm"
-        className="mt-4 w-fit border-white/20 bg-transparent text-white hover:bg-white/10 hover:text-white"
-        render={<Link href={href} />}
-      >
-        Learn more
-      </Button>
     </div>
   );
 }
@@ -617,14 +595,12 @@ export function PlatformArchitectureExplorer({
   className,
 }: PlatformArchitectureExplorerProps) {
   const runwayRef = useRef<HTMLDivElement>(null);
-  const mobileRunwayRef = useRef<HTMLDivElement>(null);
   const [isLargeScreen, setIsLargeScreen] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [scrollFloatIndex, setScrollFloatIndex] = useState(0);
   const [discreteIndex, setDiscreteIndex] = useState(0);
 
   const useDesktopScrollDrive = isLargeScreen && !prefersReducedMotion;
-  const useMobileScrollDrive = !isLargeScreen;
   const floatIndex = useDesktopScrollDrive ? scrollFloatIndex : discreteIndex;
 
   const activeIndex = clamp(Math.round(floatIndex), 0, LAYER_COUNT - 1);
@@ -659,6 +635,18 @@ export function PlatformArchitectureExplorer({
     },
     [useDesktopScrollDrive],
   );
+
+  const goToPreviousLayer = useCallback(() => {
+    setDiscreteIndex((current) =>
+      current === 0 ? LAYER_COUNT - 1 : current - 1,
+    );
+  }, []);
+
+  const goToNextLayer = useCallback(() => {
+    setDiscreteIndex((current) =>
+      current === LAYER_COUNT - 1 ? 0 : current + 1,
+    );
+  }, []);
 
   useLayoutEffect(() => {
     const motionMq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -703,29 +691,6 @@ export function PlatformArchitectureExplorer({
       window.removeEventListener("resize", update);
     };
   }, [useDesktopScrollDrive, sectionRef]);
-
-  // Switch layers via vertical scroll on mobile.
-  useEffect(() => {
-    if (!useMobileScrollDrive) return;
-
-    const update = () => {
-      const runway = mobileRunwayRef.current;
-      if (!runway) return;
-
-      const progress = getMobileRunwayProgress(runway);
-      const index =
-        LAYER_COUNT <= 1 ? 0 : Math.round(progress * (LAYER_COUNT - 1));
-      setDiscreteIndex(clamp(index, 0, LAYER_COUNT - 1));
-    };
-
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    return () => {
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-    };
-  }, [useMobileScrollDrive]);
 
   const explorerContent = (
     <div className="relative isolate mx-auto w-full max-w-8xl overflow-visible rounded-md border border-white/10">
@@ -779,32 +744,33 @@ export function PlatformArchitectureExplorer({
     </div>
   );
 
-  if (useMobileScrollDrive) {
-    const mobileRunwayHeight = `calc(100vh - ${SITE_HEADER_OFFSET} + ${
-      MOBILE_LAYER_SCROLL_VH * (LAYER_COUNT - 1)
-    }vh)`;
-
-    return (
-      <div ref={mobileRunwayRef} className="relative" style={{ height: mobileRunwayHeight }}>
-        <div
-          className="sticky flex flex-col overflow-visible pt-8"
-          style={{
-            top: SITE_HEADER_OFFSET,
-            height: `calc(100vh - ${SITE_HEADER_OFFSET})`,
-          }}
-        >
-          {showHeader && <PlatformArchitectureHeader className={HEADER_GRID_GAP} />}
-          <div className="min-h-0 flex-1 overflow-visible">{explorerContent}</div>
-        </div>
-      </div>
-    );
-  }
+  const mobileLayerNav = (
+    <div className="mt-6 flex justify-center gap-3">
+      <button
+        type="button"
+        onClick={goToPreviousLayer}
+        aria-label="Previous layer"
+        className="flex size-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+      >
+        <ChevronLeft className="size-5" strokeWidth={1.5} />
+      </button>
+      <button
+        type="button"
+        onClick={goToNextLayer}
+        aria-label="Next layer"
+        className="flex size-10 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+      >
+        <ChevronRight className="size-5" strokeWidth={1.5} />
+      </button>
+    </div>
+  );
 
   if (!useDesktopScrollDrive) {
     return (
       <>
         {showHeader && <PlatformArchitectureHeader className={HEADER_GRID_GAP} />}
         {explorerContent}
+        {!isLargeScreen && mobileLayerNav}
       </>
     );
   }
